@@ -1,0 +1,2 @@
+db.students.aggregate([{ '$unwind': '$scores' }, { '$match': { 'scores.type':
+'homework' } }, { '$group': { _id: { id: '$_id' }, minHwScore: { $min: '$scores.score' } } }]);

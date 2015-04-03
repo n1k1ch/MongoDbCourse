@@ -1,0 +1,26 @@
+db.students.aggregate([
+	{
+		'$match': {
+			_id: 1
+		}
+	},
+	{
+		'$unwind': '$scores'
+	},
+	{
+		'$match': {
+			'scores.type': 'homework'
+		}
+	},
+	{
+		$sort: {
+			'scores.score': 1
+		}
+	},
+	{
+		'$project': {
+			'scores.score': 1
+		}
+	}
+]).pretty();
+

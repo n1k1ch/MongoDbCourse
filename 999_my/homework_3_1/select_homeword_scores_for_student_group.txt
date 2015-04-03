@@ -1,0 +1,30 @@
+var projection = {'$project': {name: 1, 'scores.score' : 1, 'scores.type':1}};
+
+db.students.aggregate([{
+	'$match': {
+		_id: 1
+	}
+},
+{
+	'$unwind': '$scores'
+},
+{
+	'$match': {
+		'scores.type': 'homework'
+	}
+},
+{
+	'$group': {
+		_id: {
+			id: '$_id'
+		},
+		minHwScore: {
+			$min: '$scores.score'
+		}
+	}
+},
+{
+	$sort: {
+		'scores.score': 1
+	}
+}]).pretty();
