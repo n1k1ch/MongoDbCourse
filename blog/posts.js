@@ -90,7 +90,14 @@ function PostsDAO(db) {
         }
 
         // hw3.3 TODO
-        callback(Error("addComment Not Yet Implemented!"), null);
+        posts.update({"permalink": permalink}, {$push: {comments: comment}}, function(err, updatedDocsCount){
+            if(err) {
+                return callback(err, null);
+            }
+
+            console.log("Added " + updatedDocsCount + " comments");
+            callback(null, updatedDocsCount);
+        });
     }
 }
 
