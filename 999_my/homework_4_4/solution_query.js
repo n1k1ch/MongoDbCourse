@@ -1,3 +1,5 @@
+use m101;
+
 db.profile
 		.find({ns:'school2.students'})
 		.sort({millis:-1})
