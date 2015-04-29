@@ -1,0 +1,23 @@
+db.zips.aggregate([
+{
+	$match:{
+		state:{$in:['NY','CA']},
+		pop:{$gt:25000}
+	}
+},
+{
+	$group:{
+		_id:{state:"$state"},
+		pp:{$push:"$pop"}
+	}
+},
+{
+	$unwind:"$pp"
+},
+{
+	$group:{
+		_id:null,
+		avg:{$avg:"$pp"}
+	}
+}
+]);
